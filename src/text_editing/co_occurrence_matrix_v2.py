@@ -161,6 +161,15 @@ class Coo_Matrix:
 			calls external function and passes object data."""
 		return normalized_relative_frequency(w1,w2,self.A,self.w2id,self.id2w)
 
+	def relative_frequency_percentile(self, w1, w2):
+		""" returns the average of the w1s row and w2s row percentile 
+			where their intersection is the sample value 
+			in both calculations. (row or column would work as matrix is symetric)"""
+		w1_rf_percentile = np.percentile(self.A[self.w2id[w1]],self.A[self.w2id[w1],self.w2id[w2]])
+		w2_rf_percentile = np.percentile(self.A[self.w2id[w2]],self.A[self.w2id[w1],self.w2id[w2]])
+
+		return (w1_rf_percentile + w2_rf_percentile)/2.0
+
 
 	def load(self, directory_path):
 		""" load cooccurence matrix model from directory """

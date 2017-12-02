@@ -54,6 +54,11 @@ print(CM.normalized_relative_frequency('hello', 'baby'))
 print(CM.normalized_relative_frequency('hello', 'girl'))
 print(CM.normalized_relative_frequency('rag', 'darling'))
 
+print(CM.relative_frequency_percentile('hello', 'my'))
+print(CM.relative_frequency_percentile('hello', 'baby'))
+print(CM.relative_frequency_percentile('rag', 'girl'))
+print(CM.relative_frequency_percentile('rag', 'darling'))
+
 #
 #	test proper noun retrival and sentence cleaning
 #
