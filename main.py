@@ -59,9 +59,10 @@ CM.load(directory_path + '/' + model_name)
 
 
 #
-#	Save results
+#	Find related words
 #
 
+"""
 print(CM.relative_frequency('donald', 'trump'))
 print(CM.relative_frequency('president', 'trump'))
 print(CM.relative_frequency('oil', 'trump'))
@@ -70,6 +71,31 @@ print(CM.relative_frequency('people', 'oil'))
 
 print(CM.most_related_word('donald'))
 print(CM.rank_most_related_words('donald')[:20])
+
+trump_list = CM.related_words_list_filtered_decending('trump')
+print(trump_list[:20])
+"""
+
+#
+#	Save results
+#
+import random
+id2w = CM.id2w
+
+n = 10
+m = 5
+random_indexs = random.sample(range(0, len(id2w)-1), n)
+corpus_terms = [id2w[i] for i in random_indexs]
+
+for t in corpus_terms:
+	print('\nterm: %s' % t)
+	related_terms = CM.related_words_list_filtered_decending(t)
+	for i in range(m):
+		print(related_terms[i])
+
+#corpus_terms = ['donald', 'trump', 'america', 'russia', 'space','cannabis','prescription','court']
+#llist = CM.related_words_list_filtered_decending('space')
+#print(llist[:5])
 
 
 #

@@ -54,13 +54,20 @@ def clean_word(raw_word):
 	""" Takes string converts to lower case, stems 
 	and returns empty string if word is stop word, 
 	punctation or is less than 3 characters long """
-	
+
 	raw_word = raw_word.lower()
 	if is_stopword(raw_word) or is_punctuation(raw_word) or is_shorter(raw_word) or is_number(raw_word):
 		word = ""
 	else:
 		word = stem(raw_word)
 	return word
+
+def remove_short_and_stopwords(token_list):
+	filtered_token_list = []
+	for t in token_list:
+		if is_stopword(t) or is_punctuation(t) or is_shorter(t) or is_number(t):pass
+		else: filtered_token_list.append(t)
+	return filtered_token_list
 
 
 def set_clean_raw_text(raw_text):

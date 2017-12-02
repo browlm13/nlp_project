@@ -180,6 +180,10 @@ class Coo_Matrix:
 		ranked_words = [self.id2w[i] for i in indexs]
 		return ranked_words
 
+	def related_words_list_filtered_decending(self,w1):
+		raw_related_words = self.rank_most_related_words(w1)
+		filtered_related_words = normalizers.remove_short_and_stopwords(raw_related_words)
+		return filtered_related_words
 
 	# relative frequency is best metric above all its variations
 	def relative_frequency(self, w1,w2):
