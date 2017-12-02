@@ -37,7 +37,7 @@ def load_dataset(subreddit, subreddit_data_path):
 #
 
 # build one large coocurence matrix by stiching documents
-corpus = "hello my darling"
+corpus = "hello my darling. hello my baby. hello my rag time girl."
 #corpus = all_documents[0]['text']
 #corpus = ''.join([d['text'] for d in all_documents])
 
@@ -46,10 +46,13 @@ CM = Coo_Matrix(corpus)
 # test saving and loading
 directory_path = '/data/models'
 model_name = 'model1'
-CM.save(directory_path,model_name)
+#CM.save(directory_path,model_name)
 CM.load(directory_path + '/' + model_name)
 
-
+print(CM.normalized_relative_frequency('hello', 'my'))
+print(CM.normalized_relative_frequency('hello', 'baby'))
+print(CM.normalized_relative_frequency('hello', 'girl'))
+print(CM.normalized_relative_frequency('rag', 'darling'))
 
 #
 #	test proper noun retrival and sentence cleaning

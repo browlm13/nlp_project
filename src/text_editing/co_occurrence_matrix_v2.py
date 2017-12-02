@@ -154,6 +154,14 @@ def normalized_relative_frequency(w1,w2, A, w2id, id2w):
 
 class Coo_Matrix:
 
+	def normalized_relative_frequency(self, w1,w2):
+		""" return relative frequencies between two 
+			words in cooccurence matrix divided by the 
+			mean relative_frequency of every matrix value. 
+			calls external function and passes object data."""
+		return normalized_relative_frequency(w1,w2,self.A,self.w2id,self.id2w)
+
+
 	def load(self, directory_path):
 		""" load cooccurence matrix model from directory """
 
