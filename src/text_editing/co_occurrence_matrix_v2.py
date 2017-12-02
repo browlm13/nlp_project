@@ -154,6 +154,40 @@ def normalized_relative_frequency(w1,w2, A, w2id, id2w):
 
 class Coo_Matrix:
 
+	#def return_ranked_word_pairs(self):
+	#	""" return word pairs ranked by relative_frequency """
+
+	def most_related_word(self, w1):
+		""" finds highest related word to passed word (highest element in words row or coulmn)"""
+		col = self.A[:,self.w2id[w1]].tolist()
+		max_row_index = 0
+		max_row_value = col[0]
+		for i in range(len(col)-1):
+			if (col[i] > max_row_value):
+				max_row_value = col[i]
+				max_row_index = i
+
+		return self.id2w[max_row_index]
+
+	def rank_most_related_words(self,w1):
+		col = self.A[:,self.w2id[w1]].tolist()
+
+		list_of_index_value_tuples = list(zip(list(range(len(col))),col))
+		#(colindex,value)
+		sorted_indexs_value_tuples = sorted(list_of_index_value_tuples, key=lambda x: x[1])
+		sorted_indexs_value_tuples.reverse()
+		indexs, values = zip(*sorted_indexs_value_tuples)
+		ranked_words = [self.id2w[i] for i in indexs]
+		return ranked_words
+
+
+	# relative frequency is best metric above all its variations
+	def relative_frequency(self, w1,w2):
+		""" return relative frequencies between two 
+			words in cooccurence matrix. calls external 
+			function and passes object data."""
+		return relative_frequency(w1,w2,self.A,self.w2id,self.id2w)
+
 	def normalized_relative_frequency(self, w1,w2):
 		""" return relative frequencies between two 
 			words in cooccurence matrix divided by the 
@@ -161,6 +195,7 @@ class Coo_Matrix:
 			calls external function and passes object data."""
 		return normalized_relative_frequency(w1,w2,self.A,self.w2id,self.id2w)
 
+	#not accurate
 	def relative_frequency_percentile(self, w1, w2):
 		""" returns the average of the w1s row and w2s row percentile 
 			where their intersection is the sample value 
@@ -272,6 +307,7 @@ class Coo_Matrix:
 	def __init__(self, corpus=None):
 
 		if corpus != None:
+			logger.info("Building Cooccurence Matrix")
 			self.A, self.n, self.w2id, self.id2w = self.break_corpus(corpus)
 
 		logger.info("Creating empty Co-occurence Matrix")

@@ -37,32 +37,45 @@ def load_dataset(subreddit, subreddit_data_path):
 #
 
 # build one large coocurence matrix by stiching documents
-corpus = "hello my darling. hello my baby. hello my rag time girl."
-#corpus = all_documents[0]['text']
 #corpus = ''.join([d['text'] for d in all_documents])
+#CM = Coo_Matrix(corpus)
 
-CM = Coo_Matrix(corpus)
+# 
+# test save coocurence matrix
+#
 
-# test saving and loading
+#directory_path = '/data/models'
+#model_name = 'model1'
+#CM.save(directory_path,model_name)
+
+# 
+# test load coocurence matrix
+#
+
 directory_path = '/data/models'
 model_name = 'model1'
-#CM.save(directory_path,model_name)
+CM = Coo_Matrix()
 CM.load(directory_path + '/' + model_name)
 
-print(CM.normalized_relative_frequency('hello', 'my'))
-print(CM.normalized_relative_frequency('hello', 'baby'))
-print(CM.normalized_relative_frequency('hello', 'girl'))
-print(CM.normalized_relative_frequency('rag', 'darling'))
 
-print(CM.relative_frequency_percentile('hello', 'my'))
-print(CM.relative_frequency_percentile('hello', 'baby'))
-print(CM.relative_frequency_percentile('rag', 'girl'))
-print(CM.relative_frequency_percentile('rag', 'darling'))
+#
+#	Save results
+#
+
+print(CM.relative_frequency('donald', 'trump'))
+print(CM.relative_frequency('president', 'trump'))
+print(CM.relative_frequency('oil', 'trump'))
+print(CM.relative_frequency('birth', 'defects'))
+print(CM.relative_frequency('people', 'oil'))
+
+print(CM.most_related_word('donald'))
+print(CM.rank_most_related_words('donald')[:20])
+
 
 #
 #	test proper noun retrival and sentence cleaning
 #
-#raw_sentence = "Michael Jackson likes to eat at McDonalds"
+#raw_sentence = "Donald Trump"
 #token_list = normalizers.processes_and_tokenize(raw_sentence)
 #token_set = normalizers.set_clean_tokens(token_list)
 #raw_token_list = component_extraction.extract_words(raw_sentence)
