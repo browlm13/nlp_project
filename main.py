@@ -58,6 +58,7 @@ CM = Coo_Matrix()
 CM.load(directory_path + '/' + model_name)
 
 
+
 #
 #	Find related words
 #
@@ -74,24 +75,42 @@ print(CM.rank_most_related_words('donald')[:20])
 
 trump_list = CM.related_words_list_filtered_decending('trump')
 print(trump_list[:20])
+
 """
+
 
 #
 #	Save results
 #
 import random
+import numpy as np
+
 id2w = CM.id2w
 
-n = 10
-m = 5
+n = 150		# sample size
+m = 10		# top m most related words
 random_indexs = random.sample(range(0, len(id2w)-1), n)
 corpus_terms = [id2w[i] for i in random_indexs]
 
+corpus_terms = ['republican','flynn','trump','2016','lied','biblical','drug','communist','criminal','russia','chinese','inauguration','obama','nuclear','spine','twitter','students','unanimous','hillary','peace','deal', 'clearances','financial','failed','prescription','unprecedented','election','ship','taliban','military']
+corpus_terms = ['republican','ship','drug','communist','taliban','flynn','russia','inauguration','trump','obama','spine','2016','twitter','unprecedented','election','unanimous','hillary','prescription','peace','financial']
+
+# list of lists where the first index is a corpus term and the trailing indexs are its ranked related words
+list_of_related_word_lists = []
 for t in corpus_terms:
 	print('\nterm: %s' % t)
 	related_terms = CM.related_words_list_filtered_decending(t)
 	for i in range(m):
 		print(related_terms[i])
+	list_of_related_word_lists.append(related_terms[:m])
+
+np_related_words = np.array(list_of_related_word_lists)
+
+# write randomly sampled related words to file
+directory_path = 'results/cooccurence_matrix_related_words'
+np_related_words_file_path = directory_path + '/np_related_words_'+ model_name	#np.save appends extension .npy
+np.save(np_related_words_file_path, np_related_words)
+
 
 #corpus_terms = ['donald', 'trump', 'america', 'russia', 'space','cannabis','prescription','court']
 #llist = CM.related_words_list_filtered_decending('space')
